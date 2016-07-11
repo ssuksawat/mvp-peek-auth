@@ -1,0 +1,39 @@
+{
+  "name": "mvp-peek-auth",
+  "version": "1.0.0",
+  "description": "2-factor authentication API",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "start:dev": "NODE_ENV=development npm run watch",
+    "test": "npm run test:client & npm run test:server",
+    "test:client": "",
+    "test:server": "",
+    "prebuild": "npm run clean",
+    "build": "npm run build:js && npm run build:css",
+    "build:js": "npm run babelify && npm run uglify",
+    "build:css": "npm run pleeease",
+    "clean": "rimraf dist/*",
+    "eslint": "npm run eslint:app & npm run eslint:server",
+    "eslint:app": "eslint client/**/*.js --ignore-pattern client/**/*.spec.js",
+    "eslint:server": "eslint server/**/*.js",
+    "eslint:spec": "eslint client/**/*.spec.js tests/**/*.js",
+    "pleeease": "pleeease-compile",
+    "babelify": "browserify client/index.js --transform --outfile dist/bundle.js --source-maps -d",
+    "uglify": "uglifyjs --compress --mangle --output dist/bundle.js -- dist/bundle.js",
+    "watch": "npm run watch:app & npm run watch:server",
+    "watch:app": "npm run watch:js & npm run watch:css",
+    "watch:server": "nodemon --ignore public/ --ignore client/ --ignore test/ server/index.js",
+    "watch:css": "nodemon -e scss -x \"npm run build:css\"",
+    "watch:js": "watchify -v -t babelify client/index.js -o dist/bundle.js -d"
+  },
+  "author": "Sompop Suksawat (ssuksawat21@gmail.com)",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "cors": "^2.7.1",
+    "express": "^4.14.0",
+    "morgan": "^1.7.0",
+    "sendgrid": "^3.0.7"
+  }
+}
