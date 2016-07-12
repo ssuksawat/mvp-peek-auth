@@ -5,8 +5,8 @@ const SigninToken = require('../tokens/signin-token.model');
 const generator = require('../utils/generator');
 const send = require('../utils/send');
 
-const env = process.env.NODE_ENV || 'development';
-const loginUrl = require('../config/config')[env].loginUrl;
+const config = require('../config/config');
+const loginUrl = config.loginUrl;
 
 module.exports = {
   redirectToLogin,
@@ -52,6 +52,37 @@ function submitUser(req, res) {
     });
 }
 
-function login() {
+function login(req, res) {
+  const clientId = req.query.client_id;
+  const username = req.params.username;
+  const token = req.body.passcode;
 
+  SigninToken.findOne({where: {token, clientId, username}})
+    .then(sToken => {
+      if (!sToken) { throw new Error('Token does not exist.'); }
+      if (sToken.status === 'EXPIRED' || Date.now() >= sToken.expiration) {
+        sToken.status = 'EXPIRED';
+        sToken.save();
+        throw new Error('Your sign-in token has expired. Please request a new token.');
+      } else {
+        // Expires Token
+        sToken.status = 'EXPIRED';
+        sToken.save();
+        // Create and return Access Token
+        const payload = {username, clientId};
+        return generator.getJwt(payload, config.jwtSecret)
+          .then(jwt => AccessToken.create({token: jwt, username, clientId}));
+      }
+    })
+    .then(newToken => {
+      return Client.findOne({where: {clientId}})
+        .then(client => {
+          console.log('Redirect to: ', client.callbackUrl + `?access_token=${newToken.token}`);
+          res.redirect(client.callbackUrl + `?access_token=${newToken.token}`);
+        });
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send({message: err.message});
+    });
 }

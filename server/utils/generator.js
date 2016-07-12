@@ -1,8 +1,13 @@
+const Promise = require('bluebird').Promise;
 const uuid = require('node-uuid');
+const jwt = require('jsonwebtoken');
+
+const sign = Promise.promisify(jwt.sign, {context: jwt});
 
 module.exports = {
   getUUID,
-  getDigits
+  getDigits,
+  getJwt
 };
 
 function getUUID() {
@@ -11,4 +16,8 @@ function getUUID() {
 
 function getDigits() {
   return Math.floor(Math.random()*9000) + 1000;
+}
+
+function getJwt(info, secret) {
+  return sign(info, secret, {});
 }

@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../config/sequelize').db;
+const moment = require('moment');
 
 const AccessToken = sequelize.define('accessToken', {
   token: { type: Sequelize.STRING, allowNull: false, unique: true },

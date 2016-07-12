@@ -1,7 +1,8 @@
 const path = require('path');
 const rootPath = path.join(__dirname, '../..');
 
-module.exports = {
+const env = process.env.NODE_ENV || 'development';
+const config = {
   development: {
     rootPath: rootPath,
     db: process.env.DATABASE_URL || 'mysql://root@localhost/peekdb',
@@ -21,4 +22,6 @@ module.exports = {
     sendgridKey: process.env.SENDGRID_KEY || '',
     jwtSecret: process.env.JWT_SECRET || 'super secret stuff' //TODO: Refactor to dynamically gen secret
   }
-}
+};
+
+module.exports = config[env];

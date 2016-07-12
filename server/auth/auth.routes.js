@@ -7,7 +7,7 @@ AuthRouter.route('/auth')
 AuthRouter.route('/login')
   .post(AuthCtrl.submitUser);
 
-AuthRouter.route('/login/:user')
+AuthRouter.route('/login/:username')
   .post(AuthCtrl.login);
 
 
