@@ -1,6 +1,6 @@
 {
   // http://eslint.org/docs/rules/
-
+  "ecmaVersion": 6,
   "ecmaFeatures": {
     "arrowFunctions": 1,                        // enable arrow functions
     "binaryLiterals": false,                    // enable binary literals
@@ -37,6 +37,7 @@
     "jquery": 1,          // jquery global variables
     "prototypejs": false, // prototypejs global variables
     "shelljs": false,     // shelljs global variables
+    "es6": true
   },
 
   "globals": {
