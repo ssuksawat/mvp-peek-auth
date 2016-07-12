@@ -4,6 +4,7 @@ const app = express();
 const env = process.env.NODE_ENV || 'development';
 const config = require('./config/config')[env];
 
+require('./config/sequelize').init(config);
 require('./config/express')(app, config);
 require('./config/routes')(app);
 
