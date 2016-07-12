@@ -3,7 +3,7 @@ const sequelize = require('../config/sequelize').db;
 const moment = require('moment');
 
 const SigninToken = sequelize.define('signinToken', {
-  token: { type: Sequelize.STRING, allowNull: false, unique: true },
+  token: { type: Sequelize.STRING, allowNull: false },
   clientId: { type: Sequelize.UUID, allowNull: false },
   username: { type: Sequelize.STRING, allowNull: false },
   expiration: { type: Sequelize.DATE },
