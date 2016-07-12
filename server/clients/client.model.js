@@ -9,9 +9,7 @@ const Client = sequelize.define('client', {
   callbackUrl: { type: Sequelize.STRING, allowNull: false }
 });
 
-Client.beforeCreate((user) => {
-  user.clientId = generator.getUUID();
-});
+Client.beforeCreate(user => user.clientId = generator.getUUID());
 
 // Sync with DB
 Client.sync({force: true});
