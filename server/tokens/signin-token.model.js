@@ -16,7 +16,7 @@ const SigninToken = sequelize.define('signinToken', {
 
 SigninToken.beforeCreate(token => token.expiration = moment().add(60, 's'));
 
-SigninToken.sync({force: true});
+SigninToken.sync();
 
 
 module.exports = SigninToken;

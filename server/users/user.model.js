@@ -13,6 +13,6 @@ const User = sequelize.define('user', {
 });
 
 // Sync table
-User.sync({force: true});
+User.sync();
 
 module.exports = User;

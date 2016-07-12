@@ -1,8 +1,10 @@
 const AuthRouter = require('express').Router();
 const AuthCtrl = require('./auth.controller');
 
+AuthRouter.route('/auth')
+  .get(AuthCtrl.redirectToLogin);
+
 AuthRouter.route('/login')
-  .get(AuthCtrl.redirectToLogin)
   .post(AuthCtrl.submitUser);
 
 AuthRouter.route('/login/:user')

@@ -14,7 +14,7 @@ const AccessToken = sequelize.define('accessToken', {
 
 AccessToken.beforeCreate(token => token.expiration = moment().add(7, 'd'));
 
-AccessToken.sync({force: true});
+AccessToken.sync();
 
 
 module.exports = AccessToken;
