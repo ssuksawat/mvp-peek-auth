@@ -1,0 +1,29 @@
+/* Import Variables */
+@import "variables.import.scss";
+
+*,
+:before,
+:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+div[ui-view] {
+  width: 100%;
+  height: 100%;
+}
+
+.text--warning {
+  color: $color-red;
+}
+
+/* Import Scss files */
+@import "auth/auth.scss";

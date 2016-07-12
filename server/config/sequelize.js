@@ -5,7 +5,7 @@ module.exports = {
 };
 
 function init(config) {
-  const sequelize = new Sequelize(config.db);
+  const sequelize = new Sequelize(config.db, { logging: false });
   module.exports.db = sequelize;
   sequelize.authenticate()
     .then(() => console.log('Database is connected'))
