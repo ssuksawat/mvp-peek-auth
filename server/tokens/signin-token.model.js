@@ -1,7 +1,5 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../config/sequelize').db;
-// const User = require('../users/user.model');
-// const Client = require('../clients/client.model');
 const moment = require('moment');
 
 const SigninToken = sequelize.define('signinToken', {
@@ -15,8 +13,6 @@ const SigninToken = sequelize.define('signinToken', {
     defaultValue: 'ACTIVE'
   }
 });
-// SigninToken.belongsTo(User, { foreignKey: 'username' });
-// SigninToken.belongsTo(Client, { foreignKey: 'clientId' });
 
 SigninToken.beforeCreate(token => token.expiration = moment().add(60, 's'));
 
