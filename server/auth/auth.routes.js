@@ -10,5 +10,7 @@ AuthRouter.route('/login')
 AuthRouter.route('/login/:username')
   .post(AuthCtrl.login);
 
+AuthRouter.route('/token')
+  .get(AuthCtrl.verifyToken);
 
 module.exports = AuthRouter;

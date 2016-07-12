@@ -4,6 +4,11 @@ const AccessToken = require('../tokens/access-token.model');
 const SigninToken = require('../tokens/signin-token.model');
 const generator = require('../utils/generator');
 const send = require('../utils/send');
+const moment = require('moment');
+const Promise = require('bluebird').Promise;
+const jwt = require('jsonwebtoken');
+const verify = Promise.promisify(jwt.verify, {context: jwt});
+
 
 const config = require('../config/config');
 const loginUrl = config.loginUrl;
@@ -11,7 +16,8 @@ const loginUrl = config.loginUrl;
 module.exports = {
   redirectToLogin,
   submitUser,
-  login
+  login,
+  verifyToken
 };
 
 function redirectToLogin(req, res) {
@@ -80,6 +86,38 @@ function login(req, res) {
           console.log('Redirect to: ', client.callbackUrl + `?access_token=${newToken.token}`);
           res.redirect(client.callbackUrl + `?access_token=${newToken.token}`);
         });
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send({message: err.message});
+    });
+}
+
+function verifyToken(req, res) {
+  const token = req.query.access_token;
+  if (!token) {
+    return res.status(400).send({message: '"access_token" is required'});
+  }
+  verify(token, config.jwtSecret)
+    .then(decoded => {
+      return AccessToken.findOne({where: {
+        token,
+        clientId: decoded.clientId,
+        username: decoded.username
+      }});
+    })
+    .then(aToken => {
+      if (!aToken) { return res.status(401).send({message: 'Invalid token.'}) }
+      if (Date.now() >= aToken.expiration) {
+        aToken.status = 'EXPIRED';
+        aToken.save();
+        res.status(401).send({message: 'Expired token.'});
+      } else {
+        // Refresh expiration date
+        aToken.expiration = moment().add(7, 'd');
+        aToken.save();
+        res.send(200);
+      }
     })
     .catch(err => {
       console.error(err);
