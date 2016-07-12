@@ -9,7 +9,8 @@ module.exports = {
     logLevel: process.env.LOG_LEVEL || 'dev',
     secret: process.env.APP_SECRET || 'cool cats love coffee',
     sendgridKey: process.env.SENDGRID_KEY || '',
-    jwtSecret: process.env.JWT_SECRET || 'super secret stuff' //TODO: Refactor to dynamically gen secret
+    jwtSecret: process.env.JWT_SECRET || 'super secret stuff', //TODO: Refactor to dynamically gen secret
+    loginUrl: 'http://localhost:3000/login'
   },
   production: {
     rootPath: rootPath,
