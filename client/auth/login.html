@@ -19,5 +19,9 @@
     </label>
     <button ng-disabled="auth.loginForm.$invalid" type="submit">Log In</button>
     <div class="login__error-msg">{{auth.error}}</div>
+    <div class="timer">
+      <div class="ripple"></div>
+      <span>{{auth.secondsLeft}}</span>
+    </div>
   </form>
 </div>

@@ -1,6 +1,6 @@
 module.exports = AuthCtrl;
 
-function AuthCtrl($location, AuthService) {
+function AuthCtrl($location, $interval, AuthService) {
   var vm = this;
 
   vm.verified = false;
@@ -13,7 +13,10 @@ function AuthCtrl($location, AuthService) {
 
   function submitUser() {
     AuthService.submitUser(vm.credentials, $location.search().client_id)
-      .then(() => vm.verified = true)
+      .then(() => {
+        vm.verified = true;
+        startTimer();
+      })
       .catch(() => vm.error = 'User does not exist.');
   }
 
@@ -23,4 +26,17 @@ function AuthCtrl($location, AuthService) {
       .catch(() => vm.error = 'User does not exist.');
   }
 
+  /***** PRIVATE *****/
+
+  function startTimer() {
+    vm.secondsLeft = 60;
+
+    const interval = $interval(() => {
+      vm.secondsLeft--;
+      if (vm.secondsLeft <= 0) {
+        $interval.cancel(interval);
+        vm.verified = false;
+      }
+    }, 1000);
+  }
 }
