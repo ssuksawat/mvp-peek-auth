@@ -25,7 +25,7 @@ function redirectToLogin(req, res) {
   Client.findOne({
     where: { clientId }
   })
-  .then(() => res.redirect(loginUrl + '?' + clientId))
+  .then(() => res.redirect(loginUrl + '?client_id=' + clientId))
   .catch(err => {
     console.error(err);
     res.status(500).send({error: 'Cannot find client with provided "client_id"'});
@@ -84,7 +84,10 @@ function login(req, res) {
       return Client.findOne({where: {clientId}})
         .then(client => {
           console.log('Redirect to: ', client.callbackUrl + `?access_token=${newToken.token}`);
-          res.redirect(client.callbackUrl + `?access_token=${newToken.token}`);
+          res.send({callbackUrl: client.callbackUrl + `?access_token=${newToken.token}`});
+          
+          // TODO: Use server-side render with default form submit, to enable normal redirect
+          // res.redirect(client.callbackUrl + `?access_token=${newToken.token}`);
         });
     })
     .catch(err => {

@@ -1,3 +1,23 @@
 <div class="login">
-  
+  <h3 class="page-title">Sign In with Peek</h3>
+  <form name="auth.userForm" class="login__form"
+    ng-show="!auth.verified"
+    ng-submit="auth.submitUser()">
+    <label for="username" class="textfield">
+      <input type="text" id="username" required ng-model="auth.credentials.username">
+      <span class="textfield__label">Username</span>
+    </label>
+    <button ng-disabled="auth.loginForm.$invalid" type="submit">Get Peek Code</button>
+    <div class="login__error-msg">{{auth.error}}</div>
+  </form>
+  <form name="auth.passcodeForm" class="login__form"
+    ng-show="auth.verified"
+    ng-submit="auth.submitPasscode()">
+    <label for="passcode" class="textfield">
+      <input type="text" id="passcode" required min="4" max="4" ng-model="auth.credentials.passcode">
+      <span class="textfield__label">4-Digit Passcode</span>
+    </label>
+    <button ng-disabled="auth.loginForm.$invalid" type="submit">Log In</button>
+    <div class="login__error-msg">{{auth.error}}</div>
+  </form>
 </div>
