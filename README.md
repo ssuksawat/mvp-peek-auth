@@ -9,23 +9,23 @@ Features:
 - A 4-digit sign-in token, "Peek Code", will be generated and sent to user through text-message
 - Upon successful user log-in, an access-token will be generated for that user & provider
 
+<br>
 
 ## API v.1
 
-Clients API
+Clients API <br>
 `POST  /v1/clients` - Create new client
 
-Users API
+Users API <br>
 `POST  /v1/users` - Create new user
 
-Auth API
+Auth API <br>
 `GET   /v1/auth` - Redirect to Peek login page
 `POST  /v1/login?client_id=<CLIENT ID>` - Generate Peek code to log user in to client app
 `POST  /v1/login/:username` - Authenticate user and redirect back to client's redirect url
 `GET   /v1/token?access_token=<ACCESS TOKEN>` - Verify access token, will refresh expiration on successful verification
 
-Token API
-
+<br>
 
 ## How to run
 ```
