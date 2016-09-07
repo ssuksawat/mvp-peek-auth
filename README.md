@@ -20,10 +20,10 @@ Users API <br>
 `POST  /v1/users` - Create new user
 
 Auth API <br>
-`GET   /v1/auth` - Redirect to Peek login page
-`POST  /v1/login?client_id=<CLIENT ID>` - Generate Peek code to log user in to client app
-`POST  /v1/login/:username` - Authenticate user and redirect back to client's redirect url
-`GET   /v1/token?access_token=<ACCESS TOKEN>` - Verify access token, will refresh expiration on successful verification
+`GET   /v1/auth` - Redirect to Peek login page <br>
+`POST  /v1/login?client_id=<CLIENT ID>` - Generate Peek code to log user in to client app <br>
+`POST  /v1/login/:username` - Authenticate user and redirect back to client's redirect url <br>
+`GET   /v1/token?access_token=<ACCESS TOKEN>` - Verify access token, will refresh expiration on successful verification <br>
 
 <br>
 
